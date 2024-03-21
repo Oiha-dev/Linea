@@ -1,5 +1,5 @@
-#ifndef CHIPEE_PERIPHERALS_H_
-#define CHIPEE_PERIPHERALS_H_
+#ifndef LINEA_PERIPHERALS_H_
+#define LINEA_PERIPHERALS_H_
 
 #include <stdint.h>
 

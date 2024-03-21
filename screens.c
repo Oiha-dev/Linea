@@ -207,19 +207,19 @@ void blank_page(int color) {
 
 }
 
-void Tutorial(int arrow, int last_arrow) {
+void optionScreen(int Option, int last_option) {
     int y;
 
     //Arrow
-    if (arrow == 0) {
+    if (Option == 0) {
         y = 74;
-    } else if (arrow == 1) {
+    } else if (Option == 1) {
         y = 102;
-    } else if (arrow == 2) {
+    } else if (Option == 2) {
         y = 130;
-    } else if (arrow == 3) {
+    } else if (Option == 3) {
         y = 158;
-    } else if (arrow == 4) {
+    } else if (Option == 4) {
         y = 186;
     }
     extapp_pushRectUniform(0 + 96, 0 + y, 1, 9, 0xC6FF);
@@ -229,15 +229,15 @@ void Tutorial(int arrow, int last_arrow) {
     extapp_pushRectUniform(4 + 96, 4 + y, 1, 1, 0xC6FF);
 
     //Last Arrow
-if (last_arrow == 0) {
+if (last_option == 0) {
         y = 74;
-    } else if (last_arrow == 1) {
+    } else if (last_option == 1) {
         y = 102;
-    } else if (last_arrow == 2) {
+    } else if (last_option == 2) {
         y = 130;
-    } else if (last_arrow == 3) {
+    } else if (last_option == 3) {
         y = 158;
-    } else if (last_arrow == 4) {
+    } else if (last_option == 4) {
         y = 186;
     }
     extapp_pushRectUniform(0 + 96, 0 + y, 1, 9, 0xFFFF);
@@ -250,7 +250,11 @@ if (last_arrow == 0) {
     extapp_drawTextLarge("New Drawing", 107, 72, 0x0000, 0xFFFF, false);
     extapp_drawTextLarge("Open Files", 112, 100, 0x0000, 0xFFFF, false);
     extapp_drawTextLarge("Tutorial", 123, 128, 0x0000, 0xFFFF, false);
-    extapp_drawTextLarge("About", 136, 156, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("About", 137, 156, 0x0000, 0xFFFF, false);
     extapp_drawTextLarge("Quit", 142, 184, 0x0000, 0xFFFF, false);
 
+}
+
+void Refresh() {
+    extapp_pushRectUniform(33, 42, 271, 189, 0xFFFF);
 }
