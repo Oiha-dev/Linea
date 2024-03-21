@@ -4,8 +4,6 @@
 
 # Linea
 
-🎨Linea is a drawing application for the Numworks calculator using Upsilon External App🖌️ 
-
 
 ## Features
 
