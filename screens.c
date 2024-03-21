@@ -30,7 +30,7 @@ void blank_page(int color) {
     extapp_pushRectUniform(0, 30, 320, 210, 0xC6FF);
     extapp_pushRectUniform(33, 42, 271, 189, 0xFFFF);
     extapp_pushRectUniform(6, 45, 21, 21, 0x7D19);
-    extapp_pushRectUniform(7, 46, 20, 20, color);
+    extapp_pushRectUniform(7, 46, 19, 19, color);
     //Pen
     extapp_pushRectUniform(6, 72, 21, 21, 0x7D19);
     extapp_pushRectUniform(7, 73, 19, 19, 0xFFFF);
@@ -142,4 +142,115 @@ void blank_page(int color) {
     extapp_pushRectUniform(20, 142, 1, 1, 0x7D19);
     extapp_pushRectUniform(12, 138, 3, 1, 0x7D19);
     extapp_pushRectUniform(12, 143, 10, 1, 0x7D19);
+
+    //Select
+    extapp_pushRectUniform(6, 153, 21, 21, 0x7D19);
+    extapp_pushRectUniform(7, 154, 19, 19, 0xFFFF);
+    extapp_pushRectUniform(9, 156, 15, 15, 0x7D19);
+    extapp_pushRectUniform(12, 159, 9, 9, 0xFFFF);
+    extapp_pushRectUniform(10, 157, 1, 2, 0xFFFF);
+    extapp_pushRectUniform(10, 157, 2, 1, 0xFFFF);
+    extapp_pushRectUniform(13, 157, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(15, 157, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(17, 157, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(19, 157, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(21, 157, 2, 1, 0xFFFF);
+    extapp_pushRectUniform(22, 158, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(22, 160, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(22, 162, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(22, 164, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(22, 166, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(22, 168, 1, 2, 0xFFFF);
+    extapp_pushRectUniform(21, 169, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(19, 169, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(17, 169, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(15, 169, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(13, 169, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(10, 169, 2, 1, 0xFFFF);
+    extapp_pushRectUniform(10, 168, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(10, 166, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(10, 164, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(10, 162, 1, 1, 0xFFFF);
+    extapp_pushRectUniform(10, 160, 1, 1, 0xFFFF);
+
+    //Text
+    extapp_pushRectUniform(6, 180, 21, 21, 0x7D19);
+    extapp_pushRectUniform(7, 181, 19, 19, 0xFFFF);
+    extapp_pushRectUniform(14, 184, 7, 1, 0x7D19);
+    extapp_pushRectUniform(12, 185, 2, 1, 0x7D19);
+    extapp_pushRectUniform(11, 186, 1, 3, 0x7D19);
+    extapp_pushRectUniform(12, 189, 2, 1, 0x7D19);
+    extapp_pushRectUniform(14, 188, 1, 1, 0x7D19);
+    extapp_pushRectUniform(15, 189, 1, 6, 0x7D19);
+    extapp_pushRectUniform(16, 195, 1, 1, 0x7D19);
+    extapp_pushRectUniform(17, 196, 2, 1, 0x7D19);
+    extapp_pushRectUniform(21, 185, 1, 2, 0x7D19);
+    extapp_pushRectUniform(19, 187, 2, 1, 0x7D19);
+    extapp_pushRectUniform(18, 188, 1, 5, 0x7D19);
+    extapp_pushRectUniform(19, 192, 1, 4, 0x7D19);
+
+    //Files
+    extapp_pushRectUniform(6, 207, 21, 21, 0x7D19);
+    extapp_pushRectUniform(7, 208, 19, 19, 0xFFFF);
+    extapp_pushRectUniform(10, 210, 10, 1, 0x7D19);
+    extapp_pushRectUniform(9, 211, 1, 11, 0x7D19);
+    extapp_pushRectUniform(10, 222, 10, 1, 0x7D19);
+    extapp_pushRectUniform(20, 211, 1, 11, 0x7D19);
+    extapp_pushRectUniform(12, 213, 6, 1, 0x7D19);
+    extapp_pushRectUniform(12, 215, 6, 1, 0x7D19);
+    extapp_pushRectUniform(12, 217, 6, 1, 0x7D19);
+    extapp_pushRectUniform(12, 213, 6, 1, 0x7D19);
+    extapp_pushRectUniform(21, 212, 2, 1, 0x7D19);
+    extapp_pushRectUniform(23, 213, 1, 11, 0x7D19);
+    extapp_pushRectUniform(12, 224, 11, 1, 0x7D19);
+    extapp_pushRectUniform(11, 223, 1, 1, 0x7D19);
+
+}
+
+void Tutorial(int arrow, int last_arrow) {
+    int y;
+
+    //Arrow
+    if (arrow == 0) {
+        y = 74;
+    } else if (arrow == 1) {
+        y = 102;
+    } else if (arrow == 2) {
+        y = 130;
+    } else if (arrow == 3) {
+        y = 158;
+    } else if (arrow == 4) {
+        y = 186;
+    }
+    extapp_pushRectUniform(0 + 96, 0 + y, 1, 9, 0xC6FF);
+    extapp_pushRectUniform(1 + 96, 1 + y, 1, 7, 0xC6FF);
+    extapp_pushRectUniform(2 + 96, 2 + y, 1, 5, 0xC6FF);
+    extapp_pushRectUniform(3 + 96, 3 + y, 1, 3, 0xC6FF);
+    extapp_pushRectUniform(4 + 96, 4 + y, 1, 1, 0xC6FF);
+
+    //Last Arrow
+if (last_arrow == 0) {
+        y = 74;
+    } else if (last_arrow == 1) {
+        y = 102;
+    } else if (last_arrow == 2) {
+        y = 130;
+    } else if (last_arrow == 3) {
+        y = 158;
+    } else if (last_arrow == 4) {
+        y = 186;
+    }
+    extapp_pushRectUniform(0 + 96, 0 + y, 1, 9, 0xFFFF);
+    extapp_pushRectUniform(1 + 96, 1 + y, 1, 7, 0xFFFF);
+    extapp_pushRectUniform(2 + 96, 2 + y, 1, 5, 0xFFFF);
+    extapp_pushRectUniform(3 + 96, 3 + y, 1, 3, 0xFFFF);
+    extapp_pushRectUniform(4 + 96, 4 + y, 1, 1, 0xFFFF);
+
+
+    extapp_drawTextLarge("New Drawing", 107, 72, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("Open Files", 112, 100, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("Tutorial", 123, 128, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("About", 136, 156, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("Quit", 142, 184, 0x0000, 0xFFFF, false);
+
 }
