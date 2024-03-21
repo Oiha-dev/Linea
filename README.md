@@ -19,6 +19,7 @@
 ## Important
 
 Linea is not ready yet so if you want to try it you need to follow [the external app installation](https://github.com/UpsilonNumworks/Upsilon-External) of upsilon and add Linea in the "apps" folder
+_You will also need to add the line ```#define KEY_CTRL_HOME        6``` in extapp_api.h because my pr as not been merged for the moment_
 ## Authors
 
 - [@Oiha](https://www.github.com/oiha_dev)
