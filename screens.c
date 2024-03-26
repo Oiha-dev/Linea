@@ -258,3 +258,17 @@ if (last_option == 0) {
 void Refresh() {
     extapp_pushRectUniform(33, 42, 271, 189, 0xFFFF);
 }
+
+char* Tutorial() {
+    Refresh();
+    extapp_drawTextLarge("shift", 40, 46, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("e(x)", 40, 73, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("sin", 40, 100, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("7", 40, 126, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("4", 40, 154, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("1", 40, 182, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("0", 40, 208, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("Tutorial", 130, 46, 0x0000, 0xFFFF, false);
+    extapp_drawTextLarge("Linea use the keys \nof the left column \nto select tools", 100, 80, 0x0000, 0xFFFF, false);
+    return "Tutorial";
+}

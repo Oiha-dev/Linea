@@ -15,10 +15,6 @@ void Files(){
     Refresh();
 }
 
-void Tutorial(){
-    Refresh();
-}
-
 void About(){
     Refresh();
 }

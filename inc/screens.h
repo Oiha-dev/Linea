@@ -10,6 +10,7 @@ void Header();
 void blank_page(int color);
 void optionScreen(int arrow, int last_arrow);
 void Refresh();
+char* Tutorial();
 
 
 #endif

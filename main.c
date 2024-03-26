@@ -16,6 +16,9 @@ int color_5 = 0x0000;
 int color_6 = 0xE8E4;
 int color_7 = 0x001F;
 
+//variable to know the current screen
+char* current_screen = "Option";
+
 int exit_app() {
     if (extapp_isKeydown(KEY_CTRL_HOME)) {
         return 1;
@@ -40,7 +43,7 @@ void extapp_main(void) {
                 break;
             }
 
-            extapp_msleep(100);
+            extapp_msleep(200);
             if (extapp_isKeydown(KEY_CTRL_UP)) {
                 Option -= 1;
                 if (Option < 0) Option = 0;
@@ -65,7 +68,14 @@ void extapp_main(void) {
 
         else if (Option == 2){
             // Tutorial
-            Tutorial();
+            strcpy(current_screen, Tutorial());
+            while (strcmp(current_screen, "Option") == 0){
+                if(exit_app() == 1){
+                    break;
+                }
+                if(extapp_isKeydown(KEY_CTRL_OK) || extapp_isKeydown(KEY_CTRL_EXE || extapp_isKeydown(KEY_CTRL_EXIT))){
+                    strcpy(current_screen, "Option");                }
+            }
         }
 
         else if (Option == 3){

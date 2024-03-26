@@ -8,7 +8,6 @@ extern int keymappings_await[16];
 
 void Drawing();
 void Files();
-void Tutorial();
 void About();
 
 #endif
