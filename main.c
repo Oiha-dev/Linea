@@ -17,7 +17,7 @@ int color_6 = 0xE8E4;
 int color_7 = 0x001F;
 
 //variable to know the current screen
-char* current_screen = "Option";
+int current_screen = 0; // "Option" = 0, "Drawing" = 1, "Files" = 2, , "Tutorial" = 3 "About" = 4
 
 int exit_app() {
     if (extapp_isKeydown(KEY_CTRL_HOME)) {
@@ -29,7 +29,8 @@ int exit_app() {
 void extapp_main(void) {
     int Option = 0; // 0 = New Drawing, 1 = Open Files, 2 = Tutorial, 3 = About, 4 = Quit
     blank_page(color_1);
-    optionScreen(Option, 1);
+    optionScreen(Option, 1, 1);
+    extapp_msleep(500);
     while (true) {
         if (exit_app() == 1) {
             return;
@@ -39,7 +40,7 @@ void extapp_main(void) {
                 return;
             }
 
-            if (extapp_isKeydown(KEY_CTRL_OK) || extapp_isKeydown(KEY_CTRL_EXE)){   //For some reason the EXE key is not working
+            if (extapp_isKeydown(KEY_CTRL_OK) || extapp_isKeydown(52)){
                 break;
             }
 
@@ -47,13 +48,13 @@ void extapp_main(void) {
             if (extapp_isKeydown(KEY_CTRL_UP)) {
                 Option -= 1;
                 if (Option < 0) Option = 0;
-                optionScreen(Option, Option + 1);
+                optionScreen(Option, Option + 1, 0);
             }
 
             else if (extapp_isKeydown(KEY_CTRL_DOWN)) {
                 Option += 1;
                 if (Option > 4) Option = 4;
-                optionScreen(Option, Option - 1);
+                optionScreen(Option, Option - 1, 0);
             }
         }
         if (Option == 0){
@@ -61,29 +62,54 @@ void extapp_main(void) {
             Drawing();
         }
 
-        else if (Option == 1){
+        if (Option == 1){
             // Open Files
             Files();
         }
 
-        else if (Option == 2){
+        if (Option == 2) {
             // Tutorial
-            strcpy(current_screen, Tutorial());
-            while (strcmp(current_screen, "Option") == 0){
-                if(exit_app() == 1){
+            current_screen = Tutorial();
+            extapp_msleep(500);
+            while (current_screen == 3) {
+                if (exit_app() == 1) {
                     break;
                 }
-                if(extapp_isKeydown(KEY_CTRL_OK) || extapp_isKeydown(KEY_CTRL_EXE || extapp_isKeydown(KEY_CTRL_EXIT))){
-                    strcpy(current_screen, "Option");                }
+                if (extapp_isKeydown(KEY_CTRL_OK) ||
+                    extapp_isKeydown(52)) {
+                    current_screen = 0;
+                }
             }
+            if (current_screen == 0) {
+                // Display option menu again
+
+                optionScreen(Option, Option + 1, 1);
+            }
+            extapp_msleep(500);
         }
 
-        else if (Option == 3){
-            // About
-            About();
+        if (Option == 3){
+            // Tutorial
+            current_screen = About();
+            extapp_msleep(500);
+            while (current_screen == 4) {
+                if (exit_app() == 1) {
+                    break;
+                }
+                if (extapp_isKeydown(KEY_CTRL_OK) ||
+                    extapp_isKeydown(52)) {
+                    current_screen = 0;
+                }
+            }
+            if (current_screen == 0) {
+                // Display option menu again
+
+                optionScreen(Option, Option + 1, 1);
+            }
+            extapp_msleep(500);
         }
 
-        else if (Option == 4){
+        if (Option == 4){
             // Quit
             return;
         }

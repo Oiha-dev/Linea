@@ -8,9 +8,10 @@ extern int keymappings_await[16];
 
 void Header();
 void blank_page(int color);
-void optionScreen(int arrow, int last_arrow);
+void optionScreen(int arrow, int last_arrow, int first_time);
 void Refresh();
-char* Tutorial();
+int Tutorial();
+int About();
 
 
 #endif

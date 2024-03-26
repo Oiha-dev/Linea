@@ -15,7 +15,3 @@ void Files(){
     Refresh();
 }
 
-void About(){
-    Refresh();
-}
-
