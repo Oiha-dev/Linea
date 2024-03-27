@@ -7,17 +7,8 @@
 #include "inc/screens.h"
 #include "inc/logic.h"
 
-// TODO: Make a file with all the colors and parameters
-int color_1 = 0x0E88;
-int color_2 = 0xC7E1;
-int color_3 = 0xFBE4;
-int color_4 = 0x055E;
-int color_5 = 0x0000;
-int color_6 = 0xE8E4;
-int color_7 = 0x001F;
-
 //variable to know the current screen
-int current_screen = 0; // "Option" = 0, "Drawing" = 1, "Files" = 2, , "Tutorial" = 3 "About" = 4
+int current_screen = 0; // "Option" = 0, "Drawing" = 1, "Files" = 2, "Tutorial" = 3, "About" = 4
 
 int exit_app() {
     if (extapp_isKeydown(KEY_CTRL_HOME)) {
@@ -28,7 +19,7 @@ int exit_app() {
 
 void extapp_main(void) {
     int Option = 0; // 0 = New Drawing, 1 = Open Files, 2 = Tutorial, 3 = About, 4 = Quit
-    blank_page(color_1);
+    blank_page(0x0E88);
     optionScreen(Option, 1, 1);
     extapp_msleep(500);
     while (true) {
