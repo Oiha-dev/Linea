@@ -30,3 +30,14 @@ void waitForKeyPressed() {
     extapp_msleep(10);
   }
 }
+
+/**
+ * exit_app: check if the exit key is pressed
+ * @return 1 if the exit key is pressed, 0 otherwise
+ */
+int exit_app() {
+    if (extapp_isKeydown(6)) {
+        return 1;
+    }
+    return 0;
+}

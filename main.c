@@ -10,12 +10,6 @@
 //variable to know the current screen
 int current_screen = 0; // "Option" = 0, "Drawing" = 1, "Files" = 2, "Tutorial" = 3, "About" = 4
 
-int exit_app() {
-    if (extapp_isKeydown(KEY_CTRL_HOME)) {
-        return 1;
-    }
-    return 0;
-}
 
 void extapp_main(void) {
     int Option = 0; // 0 = New Drawing, 1 = Open Files, 2 = Tutorial, 3 = About, 4 = Quit

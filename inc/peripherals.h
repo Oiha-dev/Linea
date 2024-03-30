@@ -10,5 +10,6 @@ extern int keymappings_await[16];
 void init_display();
 void waitForKeyPressed();
 void draw_pixel(int x, int y, int color);
+int exit_app();
 
 #endif

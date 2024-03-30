@@ -58,6 +58,45 @@ void Drawing(){
 }
 
 void Files(){
-    Refresh();
-}
+    int MAX_FILENAMES = 4;
+    const char *filenames[MAX_FILENAMES];
+    int num_files = extapp_fileListWithExtension(filenames, MAX_FILENAMES, ".ppm", EXTAPP_FLASH_FILE_SYSTEM);
 
+    if (num_files > 0) {
+        for (int i = 0; i < num_files; i++) {
+            // Read the file
+            size_t len;
+            const char *content = extapp_fileRead(filenames[i], &len, EXTAPP_FLASH_FILE_SYSTEM);
+            if (content != NULL) {
+                // Read the header
+                char magic[3];
+                int width, height, maxval;
+                sscanf(content, "%s %d %d %d", magic, &width, &height, &maxval);
+
+                // Skip the header
+                const char *pixelData = content + strlen(magic) + 3 * sizeof(int);
+
+                // Read the pixel data and draw the image in chunks
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        // Get the pixel color
+                        int r, g, b;
+                        if (strcmp(magic, "P3") == 0) {
+                            sscanf(pixelData, "%d %d %d", &r, &g, &b);
+                            pixelData += 3 * sizeof(int);
+                        } else if (strcmp(magic, "P6") == 0) {
+                            r = *pixelData++;
+                            g = *pixelData++;
+                            b = *pixelData++;
+                        }
+
+                        // Here i convert the color to a 16-bit color but it's very strange and i don't know why it works like this lmfao
+                        uint16_t color = ((g >> 3) << 11) | ((b >> 2) << 5) | (r >> 3);
+
+                        extapp_pushRectUniform(WIDTH_OFFSET + x, HEIGHT_OFFSET + y, 1, 1, color);
+                    }
+                }
+            }
+        }
+    }
+}
