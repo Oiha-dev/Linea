@@ -15,8 +15,9 @@ void extapp_main(void) {
     int Option = 0; // 0 = New Drawing, 1 = Open Files, 2 = Tutorial, 3 = About, 4 = Quit
     blank_page(0x0E88);
     optionScreen(Option, 1, 1);
-    extapp_msleep(500);
+    extapp_msleep(200);
     while (true) {
+        extapp_msleep(200);
         if (exit_app() == 1) {
             return;
         }
@@ -44,7 +45,7 @@ void extapp_main(void) {
         }
         if (Option == 0){
             // New Drawing
-            Drawing();
+            Drawing(1);
         }
 
         if (Option == 1){

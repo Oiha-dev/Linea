@@ -216,6 +216,7 @@ void optionScreen(int Option, int last_option, int first_time) {
         extapp_drawTextLarge("Tutorial", 123, 128, 0x0000, 0xFFFF, false);
         extapp_drawTextLarge("About", 137, 156, 0x0000, 0xFFFF, false);
         extapp_drawTextLarge("Quit", 142, 184, 0x0000, 0xFFFF, false);
+
     }
     int y;
 
@@ -287,3 +288,4 @@ int About() {
     extapp_drawTextLarge("v-dev", 234, 208, 0x0000, 0xFFFF, false);
     return 4;
 }
+

@@ -11,5 +11,9 @@ void init_display();
 void waitForKeyPressed();
 void draw_pixel(int x, int y, int color);
 int exit_app();
+void draw_arrow(int x, int y, int color);
+void draw_image(int x, int y, const char *filename);
+uint16_t invert_color(uint16_t color);
+void draw_cursor(int x, int y, int size, int color1);
 
 #endif

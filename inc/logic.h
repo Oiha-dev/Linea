@@ -6,7 +6,7 @@
 extern long long unsigned int keymappings[16];
 extern int keymappings_await[16];
 
-void Drawing();
+void Drawing(int refresh);
 void Files();
 
 #endif

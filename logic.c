@@ -23,80 +23,129 @@ int color_7 = 0x001F;
 int image[HEIGHT][WIDTH]; // Image to be drawn
 
 //Drawing is the function that will make the user able to draw on the screen
-void Drawing(){
-    Refresh();
-    int CursorX = 0;
-    int CursorY = 0;
+void Drawing(int refresh){
+    extapp_msleep(200);
+    if (refresh == 1){
+        Refresh();
+    }
+    int CursorX = 33;
+    int CursorY = 42;
     int CursorColor = color_1;
     int CursorSize = 1;
+    int isDrawing = 0;
+    // This is the cursor part where I store the value of the current pixel to be able to restore it later
+    uint16_t CursorColor1;
+    extapp_pullRect(CursorX, CursorY, 1, 1, &CursorColor1);
+    extapp_pushRectUniform(CursorX, CursorY, 1, 1, CursorColor);
+
 
     while (true){
+        isDrawing = 0;
+
         if (exit_app() == 1) {
             return;
         }
-        //Draw the cursor
-        for (int i = 0; i < CursorSize; i++){
-            for (int j = 0; j < CursorSize; j++){
-                extapp_pushRectUniform(CursorX + i, CursorY + j, 1, 1, CursorColor);
+
+
+        // Change the size of the cursor
+        if (extapp_isKeydown(45) && CursorSize < 10){
+            CursorSize += 1;
+            extapp_msleep(200);
+        }
+        if (extapp_isKeydown(46) && CursorSize > 1){
+            CursorSize -= 1;
+            extapp_msleep(200);
+        }
+
+        if (extapp_isKeydown(KEY_CTRL_OK)){
+            for (int i = 0; i < CursorSize; i++){
+                for (int j = 0; j < CursorSize; j++){
+                    extapp_pushRectUniform(CursorX + i, CursorY + j, 1, 1, CursorColor);
+                    isDrawing = 1; // isDrawing = 1 means that the cursor is drawing
+                }
             }
         }
-        //Make the cursor move
-        if (extapp_isKeydown(KEY_CTRL_UP)){
+
+
+        // Make the cursor move
+        if (extapp_isKeydown(KEY_CTRL_UP) && CursorY > HEIGHT_OFFSET){
+            if (isDrawing == 0){
+                extapp_pushRectUniform(CursorX, CursorY, 1, 1, CursorColor1);
+            }
             CursorY -= 1;
+            extapp_pullRect(CursorX, CursorY, 1, 1, &CursorColor1);
+            extapp_pushRectUniform(CursorX, CursorY, 1, 1, isDrawing ? CursorColor : 0x0000);
         }
-        if (extapp_isKeydown(KEY_CTRL_DOWN)){
+        if (extapp_isKeydown(KEY_CTRL_DOWN) && CursorY < HEIGHT + HEIGHT_OFFSET - CursorSize){
+            if (isDrawing == 0){
+                extapp_pushRectUniform(CursorX, CursorY, 1, 1, CursorColor1);
+            }
             CursorY += 1;
+            extapp_pullRect(CursorX, CursorY, 1, 1, &CursorColor1);
+            extapp_pushRectUniform(CursorX, CursorY, 1, 1, isDrawing ? CursorColor : 0x0000);
         }
-        if (extapp_isKeydown(KEY_CTRL_LEFT)){
+        if (extapp_isKeydown(KEY_CTRL_LEFT) && CursorX > WIDTH_OFFSET){
+            if (isDrawing == 0){
+                extapp_pushRectUniform(CursorX, CursorY, 1, 1, CursorColor1);
+            }
             CursorX -= 1;
+            extapp_pullRect(CursorX, CursorY, 1, 1, &CursorColor1);
+            extapp_pushRectUniform(CursorX, CursorY, 1, 1, isDrawing ? CursorColor : 0x0000);
         }
-        if (extapp_isKeydown(KEY_CTRL_RIGHT)){
+        if (extapp_isKeydown(KEY_CTRL_RIGHT) && CursorX < WIDTH + WIDTH_OFFSET - CursorSize){
+            if (isDrawing == 0){
+                extapp_pushRectUniform(CursorX, CursorY, 1, 1, CursorColor1);
+            }
             CursorX += 1;
+            extapp_pullRect(CursorX, CursorY, 1, 1, &CursorColor1);
+            extapp_pushRectUniform(CursorX, CursorY, 1, 1, isDrawing ? CursorColor : 0x0000);
         }
     }
-
 }
 
 void Files(){
-    int MAX_FILENAMES = 4;
+    Refresh();
+    int isInLoop = 0;
+    int MAX_FILENAMES = 8;
     const char *filenames[MAX_FILENAMES];
     int num_files = extapp_fileListWithExtension(filenames, MAX_FILENAMES, ".ppm", EXTAPP_FLASH_FILE_SYSTEM);
+    int selected_file = 0;
+    for (int i = 0; i < num_files; i++) {
+        // Display the file name
+        char filenameWidth[50];
+        sprintf(filenameWidth, "%d", extapp_drawTextLarge(filenames[i], WIDTH_OFFSET, HEIGHT_OFFSET, 0xFFFF, 0xFFFF, false) - WIDTH_OFFSET); // This is relly messy, but it works
+        extapp_drawTextLarge(filenames[i], WIDTH_OFFSET + 135 - (extapp_drawTextLarge(filenames[i], WIDTH_OFFSET, HEIGHT_OFFSET, 0xFFFF, 0xFFFF, false) / 2), HEIGHT_OFFSET + 14 + i * 18, 0x0000, 0xFFFF, false);
+    }
 
-    if (num_files > 0) {
-        for (int i = 0; i < num_files; i++) {
-            // Read the file
-            size_t len;
-            const char *content = extapp_fileRead(filenames[i], &len, EXTAPP_FLASH_FILE_SYSTEM);
-            if (content != NULL) {
-                // Read the header
-                char magic[3];
-                int width, height, maxval;
-                sscanf(content, "%s %d %d %d", magic, &width, &height, &maxval);
+    draw_arrow(68, HEIGHT_OFFSET + 14, 0x0000);
 
-                // Skip the header
-                const char *pixelData = content + strlen(magic) + 3 * sizeof(int);
+    while (isInLoop == 0){
+        if (extapp_isKeydown(KEY_CTRL_EXIT)) {
+            isInLoop = 1;
+        }
 
-                // Read the pixel data and draw the image in chunks
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        // Get the pixel color
-                        int r, g, b;
-                        if (strcmp(magic, "P3") == 0) {
-                            sscanf(pixelData, "%d %d %d", &r, &g, &b);
-                            pixelData += 3 * sizeof(int);
-                        } else if (strcmp(magic, "P6") == 0) {
-                            r = *pixelData++;
-                            g = *pixelData++;
-                            b = *pixelData++;
-                        }
+        if (exit_app() == 1) {
+            return;
+        }
+        extapp_msleep(200);
 
-                        // Here i convert the color to a 16-bit color but it's very strange and i don't know why it works like this lmfao
-                        uint16_t color = ((g >> 3) << 11) | ((b >> 2) << 5) | (r >> 3);
+        // Navigate through the menu
+        if (extapp_isKeydown(KEY_CTRL_UP) && selected_file > 0){
+            draw_arrow(68, HEIGHT_OFFSET + 14 + selected_file * 18, 0xFFFF);
+            selected_file -= 1;
+            draw_arrow(68, HEIGHT_OFFSET + 14 + selected_file * 18, 0x0000);
+        }
+        if (extapp_isKeydown(KEY_CTRL_DOWN) && selected_file < num_files - 1){
+            draw_arrow(68, HEIGHT_OFFSET + 14 + selected_file * 18, 0xFFFF);
+            selected_file += 1;
+            draw_arrow(68, HEIGHT_OFFSET + 14 + selected_file * 18, 0x0000);
+        }
 
-                        extapp_pushRectUniform(WIDTH_OFFSET + x, HEIGHT_OFFSET + y, 1, 1, color);
-                    }
-                }
-            }
+        // Open the selected file
+        if (extapp_isKeydown(KEY_CTRL_OK)) {
+            draw_image(WIDTH_OFFSET, HEIGHT_OFFSET, filenames[selected_file]);
+            isInLoop = 1;
+            Drawing(0);
         }
     }
 }
